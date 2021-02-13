@@ -1,6 +1,10 @@
 /*
+!/keylogger/
+!/keyutil/
 !/.gitignore
 !/DOCUMENTATION.md
-!/README.md
+!/go.mod
+!/go.sum
+!/KEYBOARD.md
 !/main.go
-!/vkkeyname.go
+!/README.md

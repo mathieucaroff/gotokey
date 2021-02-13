@@ -72,12 +72,45 @@ The Base Keylogger filters out repeated keypresses **only for modifiers** (CSAW)
 
 This is the simplest key logger. It records all effectful keys with their modifiers. It stores all inputs sent during the same minute on the same timestamped line.
 
-To be more specific, the format uses the following symbols:
+By default, it assumes a QWERTY keyboard. If you use any other keyboard, you'll
+have to provide the Serial Keylogger with a description of your layout such as
+the following:
 
-- `[a-z]` for unmodified alphabtic keypresses
-- `[A-Z]` for keypresses while LSHIFT or RSHIFT is down
-- ` ` for space
-- ```([A-Z_]+(\+[A-Z_]+))/` any other combination of keys
+```txt
+~!@#$%^&*()_+
+`1234567890-=
+QWERTYUIOP{}|
+qwertyuiop[]\
+ASDFGHJKL:
+asdfghjkl;
+ZXCVBNM<>?
+zxcvbnm,./
+```
+
+Characters from the provided keyboard description will be logged. The high/log version of a row is selected depending on whether the Shift modifier is active.
+
+If the Control, Shift, Alt or Win modifier is active, a named hotkey will be recorded in a verbose form between a dot `.` and a slash `/`.
+
+Key combination examples:
+
+- Ctrl+X, Ctrl+C, Ctrl+V: `.C.X/` `.C.C/` `.C.V/`
+- Alt+F: `.A.F/`
+- Ctrl+Shift+F: `.CS.F/`
+- Enter: `.ENTER/`
+- Backspace: `.BACKSPACE/`
+- Escape: `.ESCAPE/`
+- Ctrl+Win+Shift+Alt+A: `.CWSA.A/`
+- Alt+Shift+Win+Ctrl+A: `.CWSA.A/`
+- Left, Right, Up, Down: `.LEFT/`, `.RIGHT/`, `.UP/`, `.DOWN/`
+- Home, End, PgUp, PgDown: `.HOME/`, `.END/`, `.PGUP/`, `.PGDOWN/`.
+- Ctrl+Up, Ctrl+Home, Ctrl+End: `.C.UP/`, `.C.BEGIN/`, `.C.END/`
+- Ctrl+PgUp, Ctrl+PgDown `.C.PGUP/`, `.C.PGDOWN/`
+- The dot will be inserted as follows: `.DOT/`
+
+The Serial Keylogger filters out:
+
+- empty modifier keypresses (CSA)
+- automatic repeated keypresses for modifiers (CWSA).
 
 ### Other keylogger...
 
