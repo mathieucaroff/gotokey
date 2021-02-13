@@ -37,7 +37,7 @@ func run() error {
 
 	fmt.Println("ready")
 
-	go keylogger.BaseKeyLogger(keyboardChan)
+	go keylogger.RawKeyLogger(keyboardChan)
 
 	for {
 		select {
