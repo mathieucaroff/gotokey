@@ -46,6 +46,8 @@ func run() error {
 		loggerRoutine = keylogger.RawKeyLogger
 	case "base":
 		loggerRoutine = keylogger.BaseKeyLogger
+	case "scancode":
+		loggerRoutine = keylogger.ScanCodeLogger
 	case "serial":
 		keyboardText := ""
 		if len(args) > 2 {
