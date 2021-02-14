@@ -9,7 +9,7 @@ func QwertyKeyboardText() string {
 		"QWERTYUIOP{}|",
 		"qwertyuiop[]\\",
 		"asdfghjkl:\"",
-		"asdfghjkl;",
+		"asdfghjkl;'",
 		"ZXCVBNM<>?",
 		"zxcvbnm,./",
 	}, "\n")

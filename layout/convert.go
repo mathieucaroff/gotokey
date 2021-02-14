@@ -44,6 +44,7 @@ const (
 	Escape
 	FKey
 	Modifier
+	Meta
 )
 
 // A Sign describes a keyboard input that can be sent to an application
@@ -72,8 +73,8 @@ func MakeSign(a byte) Sign {
 func KeyboardFromText(text string) Keyboard {
 	grid := strings.Split(text, "\n")
 
-	upper := make([]Sign, 128)
-	lower := make([]Sign, 128)
+	upper := make([]Sign, 542)
+	lower := make([]Sign, 542)
 
 	Register := func(kind SignKind) func(k int, name string) {
 		return func(k int, name string) {
