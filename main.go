@@ -59,6 +59,10 @@ func run() error {
 				keyboardText = kbArg
 			} else if kbArg == "asset" {
 				keyboardText = layout.Asset2017KeyboardText()
+			} else if kbArg == "azerty" {
+				keyboardText = layout.AzertyKeyboardText()
+			} else if kbArg == "qwerty" {
+				keyboardText = layout.QwertyKeyboardText()
 			} else {
 				fmt.Fprintf(os.Stderr, "unrecognized %s\n", kbArg)
 				os.Exit(1)

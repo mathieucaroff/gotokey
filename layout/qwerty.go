@@ -8,7 +8,7 @@ func QwertyKeyboardText() string {
 		"`!@#$%^&*()-=",
 		"QWERTYUIOP{}|",
 		"qwertyuiop[]\\",
-		"asdfghjkl:\"",
+		"ASDFGHJKL:\"",
 		"asdfghjkl;'",
 		"ZXCVBNM<>?",
 		"zxcvbnm,./",
