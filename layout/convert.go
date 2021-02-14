@@ -87,38 +87,41 @@ func KeyboardFromText(text string) Keyboard {
 		upper[k] = MakeSign(grid[0][k-1])
 		lower[k] = MakeSign(grid[1][k-1])
 	}
-	Register(Backspace)(15, "backspace")
+	Register(Backspace)(14, "backspace")
 
 	// D row, [16:30]
-	Register(Tabulation)(16, "tabulation")
-	for k := 17; k < 30; k++ {
-		upper[k] = MakeSign(grid[2][k-17])
-		lower[k] = MakeSign(grid[3][k-17])
+	Register(Tabulation)(15, "tabulation")
+	for k := 16; k < 28; k++ {
+		upper[k] = MakeSign(grid[2][k-16])
+		lower[k] = MakeSign(grid[3][k-16])
 	}
-	Register(Backspace)(29, "backspace")
+	upper[43] = MakeSign(grid[2][28-16])
+	lower[43] = MakeSign(grid[3][28-16])
 
-	// C row, [30:44]
-	Register(CapsLock)(30, "capslock")
-	for k := 31; k < 43; k++ {
-		upper[k] = MakeSign(grid[4][k-31])
-		lower[k] = MakeSign(grid[5][k-31])
+	// C row, [29:40]+[28]
+	Register(CapsLock)(29, "capslock")
+	for k := 30; k < 41; k++ {
+		upper[k] = MakeSign(grid[4][k-30])
+		lower[k] = MakeSign(grid[5][k-30])
 	}
-	Register(Enter)(43, "enter") // TODO: check this scancode
+	Register(Enter)(28, "enter")
 
-	// B row, [44:58]
-	Register(Modifier)(44, "lshift")
-	for k := 45; k < 57; k++ {
+	// B row, [42:55]
+	Register(Modifier)(42, "lshift")
+	for k := 44; k < 54; k++ {
 		upper[k] = MakeSign(grid[6][k-44])
 		lower[k] = MakeSign(grid[7][k-44])
 	}
-	Register(Modifier)(57, "rshift")
+	Register(Modifier)(54, "rshift")
 
-	// A row, [58, 60, 61, 62, 64]
-	Register(Modifier)(58, "lcontrol")
-	Register(Modifier)(60, "lalt")
-	Register(Space)(61, "space")
-	Register(Modifier)(62, "ralt")
-	Register(Modifier)(64, "rcontrol")
+	// A row, [29, 91, 56, 57, 86, (541, 56)]
+	Register(Modifier)(29, "lcontrol")
+	Register(Modifier)(91, "lwin")
+	Register(Modifier)(56, "lalt")
+	Register(Space)(57, "space")
+	upper[86] = MakeSign('|')
+	lower[86] = MakeSign('\\')
+	Register(Modifier)(541, "ralt")
 
 	// G1 block, [64:82]
 	Register(Move)(75, "left")
