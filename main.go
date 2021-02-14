@@ -39,33 +39,37 @@ func run() error {
 
 	fmt.Println("ready")
 
-	loggerRoutine := keylogger.RawKeyLogger
-	if len(os.Args) > 1 {
-		switch os.Args[1] {
-		case "raw":
-			loggerRoutine = keylogger.RawKeyLogger
-		case "base":
-			loggerRoutine = keylogger.BaseKeyLogger
-		case "serial":
-			keyboardText := ""
-			if len(os.Args) > 2 {
-				kbArg := os.Args[2]
-				if strings.Count(kbArg, "\n") == 7 {
-					keyboardText = kbArg
-				} else if kbArg == "asset" {
-					keyboardText = layout.Asset2017KeyboardText()
-				} else {
-					fmt.Fprintf(os.Stderr, "unrecognized %s\n", kbArg)
-					os.Exit(1)
-				}
+	var loggerRoutine func(c chan types.KeyboardEvent)
+
+	args := os.Args
+	if len(args) < 2 {
+		args = append(args, "serial", "asset")
+	}
+
+	switch args[1] {
+	case "raw":
+		loggerRoutine = keylogger.RawKeyLogger
+	case "base":
+		loggerRoutine = keylogger.BaseKeyLogger
+	case "serial":
+		keyboardText := ""
+		if len(args) > 2 {
+			kbArg := args[2]
+			if strings.Count(kbArg, "\n") == 7 {
+				keyboardText = kbArg
+			} else if kbArg == "asset" {
+				keyboardText = layout.Asset2017KeyboardText()
+			} else {
+				fmt.Fprintf(os.Stderr, "unrecognized %s\n", kbArg)
+				os.Exit(1)
 			}
-			if len(keyboardText) == 0 {
-				keyboardText = layout.QwertyKeyboardText()
-			}
-			keyboard := layout.KeyboardFromText(keyboardText)
-			loggerRoutine = func(c chan types.KeyboardEvent) {
-				keylogger.SerialKeyLogger(c, keyboard)
-			}
+		}
+		if len(keyboardText) == 0 {
+			keyboardText = layout.QwertyKeyboardText()
+		}
+		keyboard := layout.KeyboardFromText(keyboardText)
+		loggerRoutine = func(c chan types.KeyboardEvent) {
+			keylogger.SerialKeyLogger(c, keyboard)
 		}
 	}
 
