@@ -15,3 +15,5 @@ asdfghjkl;              a s d f g h j k l SEMICOLON
 ZXCVBNM<>?              Z X C V B N M ANGLEOPEN ANGLECLOSE QUESTION
 zxcvbnm,./              z x c v b n m COMMA DOT SLASH
 ```
+
+Also see this [picture of a keyboard with scan codes on keys](https://filedb.experts-exchange.com/incoming/2009/12_w01/216698/ScanCodes.jpg)

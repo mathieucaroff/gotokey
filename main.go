@@ -5,9 +5,11 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"time"
 
 	"github.com/mathieucaroff/gotokey/keylogger"
+	"github.com/mathieucaroff/gotokey/layout"
 
 	"github.com/moutend/go-hook/pkg/keyboard"
 	"github.com/moutend/go-hook/pkg/types"
@@ -44,6 +46,26 @@ func run() error {
 			loggerRoutine = keylogger.RawKeyLogger
 		case "base":
 			loggerRoutine = keylogger.BaseKeyLogger
+		case "serial":
+			keyboardText := ""
+			if len(os.Args) > 2 {
+				kbArg := os.Args[2]
+				if strings.Count(kbArg, "\n") == 7 {
+					keyboardText = kbArg
+				} else if kbArg == "asset" {
+					keyboardText = layout.Asset2017KeyboardText()
+				} else {
+					fmt.Fprintf(os.Stderr, "unrecognized %s\n", kbArg)
+					os.Exit(1)
+				}
+			}
+			if len(keyboardText) == 0 {
+				keyboardText = layout.QwertyKeyboardText()
+			}
+			keyboard := layout.KeyboardFromText(keyboardText)
+			loggerRoutine = func(c chan types.KeyboardEvent) {
+				keylogger.SerialKeyLogger(c, keyboard)
+			}
 		}
 	}
 
